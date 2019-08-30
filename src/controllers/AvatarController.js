@@ -22,7 +22,7 @@ module.exports = {
 
 
         await sharp(req.file.path)
-            .resize(500)
+            .resize(300)
             .jpeg({ quality: 70 })
             .toFile(
                 path.resolve(req.file.destination, 'resized', fileName)
