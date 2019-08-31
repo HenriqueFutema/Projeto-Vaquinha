@@ -1,3 +1,8 @@
+const sharp = require('sharp')
+const path = require('path')
+const fs = require('fs')
+
+
 const Project = require('../models/Project')
 
 module.exports = {
@@ -28,9 +33,48 @@ module.exports = {
 
     async store(req, res) {
 
-        const project = await Project.create(req.body)
+        const { nameProject, description, site } = req.body
 
-        return res.status(201).json(project);
+        if (req.file) {
+
+            const { filename: image } = req.file
+
+
+            const [name] = image.split('.')
+            const fileName = `${name}.jpg`
+
+
+            await sharp(req.file.path)
+                .resize(300)
+                .jpeg({ quality: 70 })
+                .toFile(
+                    path.resolve(req.file.destination, 'resized', fileName)
+                )
+
+            fs.unlinkSync(req.file.path)
+            const project = await Project.create({
+                nameProject,
+                description,
+                creator: req.userId,
+                images: fileName,
+                site
+            })
+            return res.status(201).json(project);
+        } else {
+
+            const project = await Project.create({
+                nameProject,
+                description,
+                creator: req.userId,
+                site
+            })
+            return res.status(201).json(project);
+
+        }
+
+
+
+
 
     },
 
