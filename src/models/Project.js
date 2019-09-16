@@ -23,7 +23,7 @@ const ProjectSchema = new mongoose.Schema({
         type: [{ type: String }]
     },
 
-    site: {
+    hashtags: {
         type: String,
         required: false
     }
