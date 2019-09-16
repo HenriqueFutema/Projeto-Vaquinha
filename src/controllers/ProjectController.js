@@ -1,14 +1,11 @@
-const sharp = require('sharp')
-const path = require('path')
-const fs = require('fs')
+const sharp = require("sharp");
+const path = require("path");
+const fs = require("fs");
 
-
-const Project = require('../models/Project')
+const Project = require("../models/Project");
 
 module.exports = {
-
     async index(req, res) {
-
         const projects = await Project.paginate({}, {
             page: req.query.page || 1,
             limit: 20,
@@ -20,79 +17,58 @@ module.exports = {
     },
 
     async show(req, res) {
-
-        const project = await Project.findById(req.params.id)
+        const project = await Project.findById(req.params.id);
 
         if (!project) {
-            return res.status(404).json({ erro: "Projeto não encontrado" })
+            return res.status(404).json({ erro: "Projeto não encontrado" });
         }
 
-        return res.status(200).json(project)
-
+        return res.status(200).json(project);
     },
 
     async store(req, res) {
-
-        const { nameProject, description, site } = req.body
+        const { nameProject, description, hashtags } = req.body;
 
         if (req.file) {
+            const { filename: image } = req.file;
 
-            const { filename: image } = req.file
-
-
-            const [name] = image.split('.')
-            const fileName = `${name}.jpg`
-
+            const [name] = image.split(".");
+            const fileName = `${name}.jpg`;
 
             await sharp(req.file.path)
                 .resize(300)
                 .jpeg({ quality: 70 })
-                .toFile(
-                    path.resolve(req.file.destination, 'resized', fileName)
-                )
+                .toFile(path.resolve(req.file.destination, "resized", fileName));
 
-            fs.unlinkSync(req.file.path)
+            fs.unlinkSync(req.file.path);
             const project = await Project.create({
                 nameProject,
                 description,
                 creator: req.userId,
                 images: fileName,
-                site
-            })
+                hashtags
+            });
             return res.status(201).json(project);
         } else {
-
             const project = await Project.create({
                 nameProject,
                 description,
                 creator: req.userId,
-                site
-            })
+                hashtags
+            });
             return res.status(201).json(project);
-
         }
-
-
-
-
-
     },
 
     async destroy(req, res) {
+        const project = await Project.findByIdAndDelete(req.params.id);
 
-        const project = await Project.findByIdAndDelete(req.params.id)
-
-        return res.status(200).json({ response: "Projeto deletado" })
-
+        return res.status(200).json({ response: "Projeto deletado" });
     },
 
     async update(req, res) {
+        const project = await Project.findByIdAndUpdate(req.params.id, req.body);
 
-        const project = await Project.findByIdAndUpdate(req.params.id, req.body)
-
-        return res.status(200).json(project)
-
+        return res.status(200).json(project);
     }
-
-
-}
+};
