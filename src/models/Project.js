@@ -1,8 +1,7 @@
-const mongoose = require('mongoose')
-const mongoosePaginate = require('mongoose-paginate')
+const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 
 const ProjectSchema = new mongoose.Schema({
-
     nameProject: {
         type: String,
         required: true
@@ -15,7 +14,7 @@ const ProjectSchema = new mongoose.Schema({
 
     creator: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     },
 
@@ -27,10 +26,10 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: false
     }
+}, {
+    timestamps: true
+});
 
-})
+ProjectSchema.plugin(mongoosePaginate);
 
-ProjectSchema.plugin(mongoosePaginate)
-
-
-module.exports = mongoose.model('Project', ProjectSchema)
+module.exports = mongoose.model("Project", ProjectSchema);
