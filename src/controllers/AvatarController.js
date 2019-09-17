@@ -32,6 +32,8 @@ module.exports = {
 
         user.image.push(fileName)
 
+        user.save()
+
         return res.json(user)
     }
 
