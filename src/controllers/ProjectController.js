@@ -26,6 +26,12 @@ module.exports = {
         return res.status(200).json(project);
     },
 
+    async showByCreator(req, res) {
+        const projects = await Project.find({ creator: req.params.id });
+
+        return res.json(projects);
+    },
+
     async store(req, res) {
         const { nameProject, description, hashtags } = req.body;
 
