@@ -23,6 +23,7 @@ routes.post("/avatar/:id", upload.single("image"), AvatarController.store);
 
 //Rotas Projetos
 routes.get("/projects/:id", ProjectController.show);
+routes.get("/projects/by/:id", ProjectController.showByCreator);
 routes.post(
     "/projects/create",
     upload.single("image"),

@@ -19,17 +19,17 @@ module.exports = {
     async show(req, res) {
         const project = await Project.findById(req.params.id);
 
-        if (!project) {
-            return res.status(404).json({ erro: "Projeto não encontrado" });
-        }
-
         return res.status(200).json(project);
     },
 
     async showByCreator(req, res) {
         const projects = await Project.find({ creator: req.params.id });
 
-        return res.json(projects);
+        if (!projects) {
+            return res.json({ error: "Sem Projetos" });
+        }
+
+        return res.status(200).json(projects);
     },
 
     async store(req, res) {
