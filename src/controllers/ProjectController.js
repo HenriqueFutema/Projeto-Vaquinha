@@ -19,6 +19,10 @@ module.exports = {
     async show(req, res) {
         const project = await Project.findById(req.params.id);
 
+        if (!project) {
+            return res.status(404).json({ error: "Projeto não encontrado" });
+        }
+
         return res.status(200).json(project);
     },
 
