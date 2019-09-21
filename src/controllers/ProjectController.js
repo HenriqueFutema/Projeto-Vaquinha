@@ -52,19 +52,30 @@ module.exports = {
 
             fs.unlinkSync(req.file.path);
             const project = await Project.create({
-                nameProject,
+                doadores,
+                DiaInit,
+                VAtual,
+                VFinal,
+                title,
                 description,
+                plans,
+                tags,
                 creator: req.userId,
-                images: fileName,
-                hashtags
+                images: fileName
             });
             return res.status(201).json(project);
         } else {
             const project = await Project.create({
-                nameProject,
+                doadores,
+                DiaInit,
+                VAtual,
+                VFinal,
+                title,
                 description,
+                plans,
+                tags,
                 creator: req.userId,
-                hashtags
+                images: fileName
             });
             return res.status(201).json(project);
         }

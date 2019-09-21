@@ -2,7 +2,28 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate");
 
 const ProjectSchema = new mongoose.Schema({
-    nameProject: {
+
+    doadores: {
+        type: Number,
+        required: true
+    },
+
+    DiaInit: {
+        type: Number,
+        required: true
+    },
+
+    VFinal: {
+        type: Number,
+        required: true
+    },
+
+    VAtual: {
+        type: Number,
+        required: true
+    },
+
+    title: {
         type: String,
         required: true
     },
@@ -19,12 +40,18 @@ const ProjectSchema = new mongoose.Schema({
     },
 
     images: {
-        type: [{ type: String }]
+        type: [{type: String}],
+        required: true
     },
 
-    hashtags: {
-        type: String,
-        required: false
+    plans: {
+        type: [{title: String, desc: String, val: Number}],
+        required: true
+    },
+
+    tags: {
+        type: {tipo: String, local: String},
+        required: true
     }
 }, {
     timestamps: true
