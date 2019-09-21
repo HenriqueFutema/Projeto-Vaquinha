@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cors = require('cors')
+const cors = require("cors");
 const bodyParser = require("body-parser");
-const path = require('path')
+const path = require("path");
 
 const database = require("./config/database");
 
@@ -13,10 +13,12 @@ mongoose.connect(database.url, {
 
 app.use(bodyParser.json());
 
-app.use(cors())
+app.use(cors());
 
-app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads', 'resized')))
-
+app.use(
+    "/files",
+    express.static(path.resolve(__dirname, "..", "uploads", "resized"))
+);
 
 app.use(require("./routes"));
 
