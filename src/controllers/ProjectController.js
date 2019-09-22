@@ -66,16 +66,11 @@ module.exports = {
             return res.status(201).json(project);
         } else {
             const project = await Project.create({
-                doadores,
-                DiaInit,
-                VAtual,
-                VFinal,
-                title,
+                nameProject,
                 description,
-                plans,
-                tags,
                 creator: req.userId,
-                images: fileName
+                images: fileName,
+                hashtags
             });
             return res.status(201).json(project);
         }
