@@ -52,16 +52,11 @@ module.exports = {
 
             fs.unlinkSync(req.file.path);
             const project = await Project.create({
-                doadores,
-                DiaInit,
-                VAtual,
-                VFinal,
-                title,
+                nameProject,
                 description,
-                plans,
-                tags,
                 creator: req.userId,
-                images: fileName
+                images: fileName,
+                hashtags
             });
             return res.status(201).json(project);
         } else {
@@ -69,7 +64,6 @@ module.exports = {
                 nameProject,
                 description,
                 creator: req.userId,
-                images: fileName,
                 hashtags
             });
             return res.status(201).json(project);
